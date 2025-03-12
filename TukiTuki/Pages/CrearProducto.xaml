@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TukiTuki.Pages.CrearProducto">
+
+    <Grid RowDefinitions="auto,9.5*">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*" HorizontalOptions="Center" ColumnSpacing="45">
+            <Grid Grid.Column="0">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnInfoForm"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Formulario" FontSize="16" Margin="0,0,45,0" FontAttributes="Bold"/>
+                <BoxView HorizontalOptions="End" VerticalOptions="Start" WidthRequest="1" HeightRequest="30" Color="White"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnImages"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Imagenes" FontSize="16" FontAttributes="Bold"/>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="InfoGrid" Grid.Row="1">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                <ScrollView Grid.Column="0">
+                    <StackLayout Padding="20" Spacing="15" HorizontalOptions="Center" WidthRequest="600">
+                        <Label Text="Agregar Producto" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                        <Grid ColumnDefinitions="60, *" ColumnSpacing="10">
+                            <Label Text="Nombre:" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center"/>
+                            <Entry x:Name="nombreEntry" Placeholder="Ingrese el nombre" Grid.Row="0" Grid.Column="1"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,*">
+                            <Grid Grid.Column="0" ColumnDefinitions="auto, 70" ColumnSpacing="20">
+                                <Label Text="Precio:" FontAttributes="Bold" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="precioEntry" Placeholder="0" Keyboard="Numeric" Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Grid.Column="1" ColumnDefinitions="auto, *" ColumnSpacing="20">
+                                <Label Text="Precio Descuento:" FontAttributes="Bold" Grid.Row="2" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="precioDescuentoEntry" Placeholder="0" Keyboard="Numeric" Grid.Row="2" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="130, *" ColumnSpacing="10">
+                            <Label Text="Breve Descripción:" Grid.Row="3" Grid.Column="0" VerticalTextAlignment="Center"/>
+                            <Editor x:Name="breveDescripcion" Placeholder="Ingrese una breve descripción" Grid.Row="3" Grid.Column="1"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="50, *" ColumnSpacing="10">
+                            <Label Text="Color:" FontAttributes="Bold" Grid.Row="4" Grid.Column="0" VerticalTextAlignment="Center"/>
+                            <StackLayout x:Name="colorContainer" Grid.Row="4" Grid.Column="1" Spacing="5">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Entry x:Name="colorEntry" Placeholder="Ejemplo: Rojo, Azul" Grid.Column="0"/>
+                                    <Button Text="+" Clicked="OnAddColorClicked" Grid.Column="1" Padding="10,0"/>
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="5.2*,4.8*" ColumnSpacing="15">
+                            <Grid Grid.Column="0" ColumnDefinitions="90, *" ColumnSpacing="10" VerticalOptions="Center">
+                                <Label Text="Tipo Medida:" FontAttributes="Bold" Grid.Row="6" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="tipoMedida" Placeholder="Ejemplo: Talla, Peso" Grid.Row="5" Grid.Column="1"/>
+                            </Grid>
+
+                            <Grid Grid.Column="1" ColumnDefinitions="55, *" ColumnSpacing="10">
+                                <Label Text="Medida:" FontAttributes="Bold" Grid.Row="5" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                <StackLayout x:Name="tallaContainer" Grid.Row="5" Grid.Column="1" Spacing="5">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Entry x:Name="tallaEntry" Placeholder="Ejemplo: S, M, L" Grid.Column="0"/>
+                                        <Button Text="+" Clicked="OnAddTallaClicked" Grid.Column="1" Padding="10,0"/>
+                                    </Grid>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                            <Grid Grid.Column="0" ColumnDefinitions="100, *" ColumnSpacing="10">
+                                <Label Text="Categoría:" FontAttributes="Bold" Grid.Row="7" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                <Picker x:Name="categoriaPicker" Grid.Row="7" Grid.Column="1" ItemDisplayBinding="{Binding Name}" />
+                            </Grid>
+
+                            <Grid Grid.Column="1" ColumnDefinitions="100, *" ColumnSpacing="10">
+                                <Label Text="Subcategoría:" FontAttributes="Bold" Grid.Row="8" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                <Picker x:Name="subcategoriaPicker" Grid.Row="8" Grid.Column="1" IsVisible="False" />
+                            </Grid>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="60, *" ColumnSpacing="10">
+                            <Label Text="Stock:" FontAttributes="Bold" Grid.Row="9" Grid.Column="0" VerticalTextAlignment="Center"/>
+                            <Entry x:Name="stockEntry" Placeholder="Cantidad en stock" Keyboard="Numeric" Grid.Row="9" Grid.Column="1"/>
+                        </Grid>
+                    </StackLayout>
+                </ScrollView>
+
+                <Grid Grid.Column="1" VerticalOptions="Center">
+                    <StackLayout Padding="20" Spacing="20" WidthRequest="350">
+                        <Grid>
+                            <Label Text="Descripcion:" FontAttributes="Bold" Grid.Row="9" Grid.Column="0" VerticalTextAlignment="Center" HorizontalOptions="Start"/>
+                            <Button Text="+  Seleccionar Imagen" Clicked="OnSelectImageClicked" TextColor="White" CornerRadius="10" HorizontalOptions="End"/>
+                        </Grid>
+                        <Image x:Name="descripcionImg" Background="Gray" MaximumHeightRequest="400" MaximumWidthRequest="400" Aspect="AspectFit"/>
+                        <Button Text="Siguiente" Clicked="OnImages" HorizontalOptions="End" Padding="30,0" TextColor="White" CornerRadius="10"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="ImagenesGrid" IsVisible="False" Grid.Row="1">
+            <Grid RowDefinitions="55,*" RowSpacing="10" Padding="0,10,0,0">
+                <ScrollView Grid.Row="0" Orientation="Horizontal" Padding="0">
+                    <StackLayout Orientation="Horizontal" x:Name="ButtonsContainer" Spacing="5" HeightRequest="45" VerticalOptions="Start">
+                        <Button Text="Imagen 1 - 960x620" Clicked="OnButtonClicked" StyleId="0"/>
+                        <Button Text="Imagen 2 - 480x620" Clicked="OnButtonClicked" StyleId="1" />
+                        <Button Text="Imagen 3 - 165x150" Clicked="OnButtonClicked" StyleId="2" />
+                        <Button Text="Imagen 4 - 390x330" Clicked="OnButtonClicked" StyleId="3" />
+                        <Button Text="Imagen 5 - 960x1235" Clicked="OnButtonClicked" StyleId="4" />
+                        <Button Text="Imagen 6 - 260x310" Clicked="OnButtonClicked" StyleId="5" />
+                        <Button Text="Imagen 7 - 260x310" Clicked="OnButtonClicked" StyleId="6" />
+                        <Button Text="Imagen 8 - 260x310" Clicked="OnButtonClicked" StyleId="7" />
+                        <Button Text="Imagen 9 - 260x310" Clicked="OnButtonClicked" StyleId="8" />
+                        <Button Text="Imagen 10 - 260x310" Clicked="OnButtonClicked" StyleId="9" />
+                        <Button Text="Imagen 11 - 260x310" Clicked="OnButtonClicked" StyleId="10" />
+                        <Button Text="Imagen 12 - 260x310" Clicked="OnButtonClicked" StyleId="11" />
+                        <Button Text="Imagen 13 - 260x310" Clicked="OnButtonClicked" StyleId="12" />
+                        <Button Text="Imagen 14 - 960x925" Clicked="OnButtonClicked" StyleId="13" />
+                        <Button Text="Imagen 15 - 960x925" Clicked="OnButtonClicked" StyleId="14" />
+                        <Button Text="Imagen 16 - 960x925" Clicked="OnButtonClicked" StyleId="15" />
+                        <Button Text="Imagen 17 - 960x925" Clicked="OnButtonClicked" StyleId="16" />
+                        <Button Text="Imagen 18 - 960x925" Clicked="OnButtonClicked" StyleId="17" />
+                        <Button Text="Imagen 19 - 960x925" Clicked="OnButtonClicked" StyleId="18" />
+                        <Button Text="Imagen 20 - 960x925" Clicked="OnButtonClicked" StyleId="19" />
+                        <Button Text="Imagen 21 - 960x925" Clicked="OnButtonClicked" StyleId="20" />
+                    </StackLayout>
+                </ScrollView>
+
+                <Grid Grid.Row="1" ColumnDefinitions="8*,2*" ColumnSpacing="20">
+                    <ScrollView Grid.Column="0">
+                        <Grid x:Name="ImagesContainer">
+                            <!-- Grid 0 -->
+                            <Frame WidthRequest="960" HeightRequest="620" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 620"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 1 -->
+                            <Frame WidthRequest="480" HeightRequest="620" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 480, 620"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 2 -->
+                            <Frame WidthRequest="165" HeightRequest="150" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 165, 150"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 3 -->
+                            <Frame WidthRequest="390" HeightRequest="330" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 390, 330"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 4 -->
+                            <Frame WidthRequest="960" HeightRequest="1235" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 1235"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 5 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 6 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 7 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 8 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 9 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 10 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 11 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 12 -->
+                            <Frame WidthRequest="260" HeightRequest="310" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 260, 310"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 13 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 14 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 15 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 16 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 17 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 18 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 19 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+
+                            <!-- Grid 20 -->
+                            <Frame WidthRequest="960" HeightRequest="925" BackgroundColor="LightGray" Padding="0" IsVisible="False" BorderColor="Transparent" CornerRadius="0">
+                                <Grid>
+                                    <Grid.Clip>
+                                        <RectangleGeometry Rect="0, 0, 960, 925"/>
+                                    </Grid.Clip>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Image Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </ScrollView>
+
+                    <StackLayout Grid.Column="1" Spacing="20" VerticalOptions="Center">
+                        <Button Grid.Column="1" Text="+ Imagen Global" Clicked="OnAddGlobalImageClicked" Padding="20,0"/>
+                        <Button Grid.Column="1" Text="Cambiar Imagen" Clicked="OnChangeImageClicked" IsVisible="False" x:Name="ChangeImageButton" Padding="20,0"/>
+
+                        <Grid RowDefinitions="4*,6*">
+                            <Label Grid.Row="0" Text="Move X:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Slider x:Name="MoveX" Grid.Column="0" Minimum="-500" Maximum="500" VerticalOptions="Center" ValueChanged="OnSliderValueChangedX" />
+                                <Button Text="-" Grid.Column="1" Clicked="OnDecrementXClicked" Padding="0"/>
+                                <Button Text="+" Grid.Column="2" Clicked="OnIncrementXClicked" />
+                            </Grid>
+                        </Grid>
+
+                        <Grid RowDefinitions="4*,6*">
+                            <Label Grid.Row="0" Text="Move Y:" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Slider x:Name="MoveY" Minimum="-500" Maximum="500" VerticalOptions="Center" ValueChanged="OnSliderValueChangedY" />
+                                <Button Text="-" Grid.Column="1" Clicked="OnDecrementYClicked" />
+                                <Button Text="+" Grid.Column="2" Clicked="OnIncrementYClicked" />
+                            </Grid>
+                        </Grid>
+
+                        <Grid RowDefinitions="4*,6*">
+                            <Label Grid.Row="0" Text="Scale:" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Slider x:Name="Scale" Minimum="0.1" Maximum="3" Value="1" VerticalOptions="Center" ValueChanged="OnSliderValueChangedScale" />
+                                <Button Text="-" Grid.Column="1" Clicked="OnDecrementScaleClicked" />
+                                <Button Text="+" Grid.Column="2" Clicked="OnIncrementScaleClicked" />
+                            </Grid>
+                        </Grid>
+
+                        <Button Grid.Column="1" Text="Crear Producto" Clicked="SaveAllGrids_Clicked"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentView>

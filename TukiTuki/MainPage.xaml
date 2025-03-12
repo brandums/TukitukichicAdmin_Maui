@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TukiTuki.MainPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="0.6*,9.4*" Padding="30,10" Background="#baf1b0">
+        <Grid Grid.Row="0" ColumnDefinitions="auto,auto,auto,auto,auto,*" ColumnSpacing="20">
+            <Grid x:Name="ProductosTab" Grid.Column="0">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuItemTapped"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Productos" FontAttributes="Bold" FontSize="15" Margin="0,0,20,0"/>
+                <BoxView HorizontalOptions="End" WidthRequest="1" HeightRequest="25" VerticalOptions="Start" BackgroundColor="White"/>
+            </Grid>
+
+            <Grid x:Name="CategoriasTab" Grid.Column="1">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuItemTapped"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Categorias" FontAttributes="Bold" FontSize="15" Margin="0,0,20,0"/>
+                <BoxView HorizontalOptions="End" WidthRequest="1" HeightRequest="25" VerticalOptions="Start" BackgroundColor="White"/>
+            </Grid>
+
+            <Grid x:Name="BotsTab" Grid.Column="2">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuItemTapped"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Bots" FontAttributes="Bold" FontSize="15" Margin="0,0,20,0"/>
+                <BoxView HorizontalOptions="End" WidthRequest="1" HeightRequest="25" VerticalOptions="Start" BackgroundColor="White"/>
+            </Grid>
+
+            <Grid x:Name="PedidosTab" Grid.Column="3">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuItemTapped"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Pedidos" FontAttributes="Bold" FontSize="15" Margin="0,0,20,0"/>
+                <BoxView HorizontalOptions="End" WidthRequest="1" HeightRequest="25" VerticalOptions="Start" BackgroundColor="White"/>
+            </Grid>
+
+            <Grid x:Name="ConfiguracionTab" Grid.Column="4">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuItemTapped"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Configuración" FontAttributes="Bold" FontSize="15" Margin="0,0,20,0"/>
+                <BoxView HorizontalOptions="End" WidthRequest="1" HeightRequest="25" VerticalOptions="Start" BackgroundColor="White"/>
+            </Grid>
+
+            <Grid x:Name="CerrarSesionTab" Grid.Column="5" HorizontalOptions="End">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLogoutClicked"/>
+                </Grid.GestureRecognizers>
+                <Label Text="Cerrar Sesion" FontAttributes="Bold" FontSize="15" Margin="0,0,20,0"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="ContentGrid">
+            
+        </Grid>
+    </Grid>
+</ContentPage>

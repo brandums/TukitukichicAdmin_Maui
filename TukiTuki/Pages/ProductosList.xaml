@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TukiTuki.Pages.ProductosList">
+
+    <Grid>
+        <ScrollView Background="#baf1b0">
+            <StackLayout Padding="15,0">
+                <Label Text="Lista de Productos TukiTukiChic" FontSize="24" FontAttributes="Bold" TextColor="Black"/>
+
+                <SearchBar x:Name="Buscador"
+                       Placeholder="Buscar productos..."
+                       TextChanged="OnSearchBarTextChanged"
+                       TextColor="Black"
+                       Margin="10" />
+
+                <CollectionView x:Name="ProductosCollectionView"
+                                ItemsSource="{Binding Productos}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="0,0,0,7">
+                                <Frame Padding="10"
+                           CornerRadius="10"
+                           BorderColor="Transparent"
+                           BackgroundColor="#f0f0f0">
+
+                                    <Grid ColumnDefinitions="auto,5*,3*" ColumnSpacing="20" Padding="10,0">
+                                        <Grid Grid.Column="0">
+                                            <Image Source="{Binding Image}" MaximumHeightRequest="80"/>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1" RowDefinitions="*,*,*,*">
+                                            <Label Text="{Binding Nombre}"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"
+                                                   Grid.Column="0"
+                                                   Grid.Row="0"
+                                                   Grid.ColumnSpan="2" 
+                                                   TextColor="Black"/>
+
+                                            <Grid Grid.Row="1" ColumnDefinitions="auto,auto" ColumnSpacing="20">
+                                                <Label Text="{Binding Precio, StringFormat='Precio: {0:C}'}" TextColor="Black" Grid.Column="0"/>
+
+                                                <Label Text="{Binding PrecioDesc, StringFormat='Precio descuento: {0:C}'}" TextColor="Black" Grid.Column="1"/>
+                                            </Grid>
+
+                                            <Label Text="{Binding Categoria, StringFormat='Categoría: {0}'}" TextColor="Black" Grid.Row="2" />
+
+                                            <Label Text="{Binding Stock, StringFormat='Stock: {0}'}" TextColor="Black" Grid.Row="3"/>
+                                        </Grid>
+
+                                        <Grid Grid.Column="2" HorizontalOptions="End" ColumnDefinitions="*,*" ColumnSpacing="10">
+                                            <Button Text="Ver Detalles"
+                                                    Grid.Column="1"
+                                                    Clicked="OnVerDetallesClicked"
+                                                    VerticalOptions="Center"
+                                                    Padding="10,0"
+                                                    MaximumHeightRequest="40"/>
+
+                                            <Button Text="Editar"
+                                                    Grid.Column="0"
+                                                    Clicked="OnEditarProductoClicked"
+                                                    VerticalOptions="Center"
+                                                    Padding="10,0"
+                                                    MaximumHeightRequest="40"/>
+                                        </Grid>                                        
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+        <Grid x:Name="PopupDetalles" IsVisible="False">
+            <Grid  BackgroundColor="#80000000">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCerrarPopupClicked"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Frame HeightRequest="470" WidthRequest="900" BackgroundColor="White" BorderColor="Transparent" Padding="50,30">
+                <StackLayout Spacing="20">
+                    <Grid ColumnDefinitions="9*,1*">
+                        <Grid Grid.Column="0" ColumnDefinitions="auto,*" ColumnSpacing="20">
+                            <Grid Grid.Column="0">
+                                <Image x:Name="PopupImage" MaximumHeightRequest="120"/>
+                            </Grid>
+
+                            <Grid Grid.Column="1" RowDefinitions="*,*,*,*">
+                                <Label x:Name="PopupNombre" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+
+                                <Grid Grid.Row="1" ColumnDefinitions="auto,auto" ColumnSpacing="20">
+                                    <Label x:Name="PopupPrecio" TextColor="Black" Grid.Column="0"/>
+
+                                    <Label x:Name="PopupPrecioDesc" TextColor="Black" Grid.Column="1"/>
+                                </Grid>
+
+                                <Label x:Name="PopupCategoria" TextColor="Black" Grid.Row="2" />
+
+                                <Label x:Name="PopupStock" TextColor="Black" Grid.Row="3"/>
+                            </Grid>
+                        </Grid>
+
+                        <Button Grid.Column="1" Clicked="OnCerrarPopupClicked" VerticalOptions="Start" HorizontalOptions="End" Text="X" TextColor="Black" FontAttributes="Bold" FontSize="20" BorderColor="Transparent" BackgroundColor="Transparent" Padding="0"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*" HorizontalOptions="Center" ColumnSpacing="25">
+                        <Label Grid.Column="0" Text="Configuración" TextColor="Black">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSettings"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Grid.Column="1" Text="Comentarios" TextColor="Black">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnComment"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+
+                    <Grid x:Name="commentContent" IsVisible="False">
+                        <Frame Padding="20" CornerRadius="10" BorderColor="Transparent" BackgroundColor="White">
+                            <StackLayout Spacing="10">
+                                <Grid ColumnDefinitions="4*,2.5*,3.5*" ColumnSpacing="20" VerticalOptions="Center">
+                                    <Grid Grid.Column="0" ColumnDefinitions="auto,*" ColumnSpacing="15">
+                                        <Label Grid.Column="0" Text="Usuario:" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        <Frame Grid.Column="1" Padding="0" BackgroundColor="Gray" BorderColor="Transparent">
+                                            <Picker Grid.Column="1" x:Name="OpinionUserPicker" ItemDisplayBinding="{Binding Name}"/>
+                                        </Frame>                                        
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" ColumnDefinitions="auto,*" ColumnSpacing="15">
+                                        <Label Grid.Column="0" Text="Fecha:" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        <Frame Grid.Column="1" Padding="0" BackgroundColor="Gray" BorderColor="Transparent">
+                                            <DatePicker x:Name="OpinionDatePicker" Format="yyyy-MM-dd" VerticalOptions="Center" TextColor="Black"/>
+                                        </Frame>                                        
+                                    </Grid>
+
+                                    <Grid Grid.Column="2" ColumnDefinitions="auto,*" ColumnSpacing="15">
+                                        <Label Grid.Column="0" Text="Calificacion:" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        <Entry Grid.Column="1" x:Name="OpinionRatingEntry" Placeholder="Calificación (1-5)" Keyboard="Numeric" TextColor="Black"/>
+                                        <BoxView Grid.Column="1" HeightRequest="1" VerticalOptions="End"/>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid>
+                                    <Entry x:Name="OpinionCommentEntry" Placeholder="Comentario" TextColor="Black"/>
+                                    <BoxView HeightRequest="1" VerticalOptions="End"/>
+                                </Grid>
+                                
+                                <Button Text="Guardar Opinión" Clicked="OnSaveOpinionClicked" BackgroundColor="#007BFF" TextColor="White"/>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+
+                    <Grid x:Name="settingsContent" ColumnDefinitions="*,*">
+                        <StackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="8" Padding="10">
+                            <Grid ColumnDefinitions="130,160,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Página actual:" FontSize="16" TextColor="Black" Margin="0"/>
+                                <Picker Grid.Column="1" x:Name="PopupPagina" Margin="0,-15,0,0" Background="Gray" FontSize="15" FontAttributes="Bold" HeightRequest="20" TextColor="White" SelectedIndexChanged="OnPaginaChanged"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarPagina" Grid.Column="2" Source="save.png" Margin="0,-15,0,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarPagina"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="130,160,20" VerticalOptions="Center" ColumnSpacing="10" Margin="0" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Posición en pag:" FontSize="16" TextColor="Black" Margin="0"/>
+                                <Picker Grid.Column="1" x:Name="PopupPosicion"  Margin="0,-15,0,0" Background="Gray" FontSize="15" FontAttributes="Bold" HeightRequest="20" TextColor="White" SelectedIndexChanged="OnPosicionChanged"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarPosicion" Grid.Column="2" Source="save.png" Margin="0,-15,0,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarPosicion"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="130,160,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Estado Visible:" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
+                                <Switch Grid.Column="1" x:Name="PopupEstado" Toggled="OnEstadoChanged"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarEstado" Grid.Column="2" Source="save.png" Margin="0,-5,0,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarEstado"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="130,160,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="En Portada:" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
+                                <Switch Grid.Column="1" x:Name="PopupPortada" Toggled="OnPortadaChanged"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarPortada" Grid.Column="2" Source="save.png" Margin="0,-5,0,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarPortada"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="8" Padding="10">
+                            <Grid ColumnDefinitions="120,150,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Descuento:" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
+                                <Switch Grid.Column="1" x:Name="PopupDescuento" Toggled="OnDescuentoChanged"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarDescuento" Grid.Column="2" Source="save.png" Margin="0,-5,0,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarDescuento"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="120,150,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Ventas Base:" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
+                                <Entry Grid.Column="1" x:Name="PopupVentas" Placeholder="Numero de Ventas" Keyboard="Numeric" TextChanged="OnVentasChanged" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Black" PlaceholderColor="Gray"/>
+                                <Border Grid.Column="1" WidthRequest="150" HorizontalOptions="Start" VerticalOptions="End" HeightRequest="1"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarVentas" Grid.Column="2" Source="save.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarVentas"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="120, 150,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Likes Base:" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
+                                <Entry Grid.Column="1" x:Name="PopupLikes" Placeholder="Numero de likes" Keyboard="Numeric" TextChanged="OnLikesChanged" Margin="0" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Black"  PlaceholderColor="Gray"/>
+                                <Border Grid.Column="1" WidthRequest="150" HorizontalOptions="Start" VerticalOptions="End" HeightRequest="1"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarLikes" Grid.Column="2" Source="save.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarLikes"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="120, 150,20" VerticalOptions="Center" ColumnSpacing="10" HeightRequest="40">
+                                <Label Grid.Column="0" Text="Tiempo Oferta:" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
+                                <Entry Grid.Column="1" x:Name="PopupOferta" Placeholder="Tiempo en horas" Keyboard="Numeric" TextChanged="OnOfertaChanged" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Black"  PlaceholderColor="Gray"/>
+                                <Border Grid.Column="1" WidthRequest="150" HorizontalOptions="Start" VerticalOptions="End" HeightRequest="1"/>
+                                <Image IsVisible="False" x:Name="ImagenGuardarOferta" Grid.Column="2" Source="save.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GuardarOferta"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </Grid>
+
+        <Grid x:Name="ContentGrid" IsVisible="False" Background="#baf1b0">
+
+        </Grid>
+    </Grid>
+</ContentView>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TukiTuki.Pages.Login"
+             Title="Login"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid BackgroundColor="#baf1b0">
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20" Spacing="20">
+            <Label Text="TukiTukichic" FontSize="26" FontAttributes="Bold" Margin="0,0,0,50" TextColor="DarkSeaGreen"/>
+            <Label Text="Iniciar Sesion" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+            <Entry x:Name="EmailEntry" Placeholder="Email" MinimumWidthRequest="300" />
+            <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" />
+            <Button Text="Iniciar Sesión" Clicked="OnLoginClicked" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

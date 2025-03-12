@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TukiTuki.Pages.BotsView">
+
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+        <Label Grid.ColumnSpan="2" Text="Bot List" FontAttributes="Bold" FontSize="24" TextColor="Black" HorizontalOptions="Center"/>
+        <Grid Grid.Column="0" VerticalOptions="Center">
+            <StackLayout Padding="20" Spacing="20">                
+                <Frame Padding="20" CornerRadius="10" BorderColor="Transparent" BackgroundColor="#B3808080">
+                    <StackLayout Spacing="10">
+                        <Label Text="Crear Nuevo Bot" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                        <Entry x:Name="CreateUserNameEntry" Placeholder="Ingrese el nombre" TextColor="White" PlaceholderColor="White"/>
+                        <Button Text="Crear Bot" Clicked="OnCreateUserClicked" BackgroundColor="#007BFF" TextColor="White"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+        
+        <ScrollView Grid.Column="1" Margin="0,50,0,0">
+            <CollectionView ItemsSource="{Binding Bots}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Text="{Binding Name}" FontSize="14" TextColor="Black" />
+                            <BoxView VerticalOptions="End" HeightRequest="1" Color="Gray" Margin="0,25,0,5"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentView>

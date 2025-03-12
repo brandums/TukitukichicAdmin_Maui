@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TukiTuki.Pages.PedidosView">
+
+    <Grid Padding="15,0" Background="#baf1b0">
+        <ScrollView>
+            <StackLayout Spacing="5">
+                <Label Text="Pedidos" FontSize="22" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
+
+                <CollectionView x:Name="PedidosCollectionView" ItemsSource="{Binding Pedidos}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="30,20" CornerRadius="10" BorderColor="Transparent" BackgroundColor="#f0f0f0">
+                                <StackLayout Spacing="10">
+                                    <Label Text="{Binding Usuario.Name}" FontSize="20" FontAttributes="Bold" TextColor="#8286a2">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnUserTapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <Grid ColumnDefinitions="100, 2.5*,2.5*,2.5*,2.5*">
+                                        <Label Grid.Column="0" Text="Image" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Grid.Column="1" Text="Nombre" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Grid.Column="2" Text="Color" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Grid.Column="3" Text="Medida" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Grid.Column="4" Text="Cantidad" FontAttributes="Bold" TextColor="Black"/>
+
+                                        <Border VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="5" Margin="0,25,0,0"/>
+                                    </Grid>
+
+                                    <StackLayout BindableLayout.ItemsSource="{Binding Productos}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions="100,2.5*,2.5*,2.5*,2.5*" Margin="0,5">
+                                                    <Image Grid.Column="0" Source="{Binding Image}" WidthRequest="50" HorizontalOptions="Start" Margin="0,0,0,10"/>
+
+                                                    <Label Grid.Column="1" Text="{Binding Nombre}" FontSize="14" TextColor="Black" VerticalOptions="Center"/>
+
+                                                    <Label Grid.Column="2" Text="{Binding Color[0]}" FontSize="14" TextColor="Black" VerticalOptions="Center"/>
+
+                                                    <Grid Grid.Column="3" ColumnDefinitions="auto,*" ColumnSpacing="15" VerticalOptions="Center">
+                                                        <Label Grid.Column="0" Text="{Binding TipoMedida}" FontSize="14" TextColor="Black"/>
+                                                        <Label Grid.Column="1" Text="{Binding Talla[0]}" FontSize="14" TextColor="Black"/>
+                                                    </Grid>
+
+                                                    <Label Grid.Column="4" Text="{Binding Cantidad}" FontSize="14" TextColor="Black" VerticalOptions="Center"/>
+                                                    <Border VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="5" Margin="0,25,0,0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+
+                                    <Label Text="{Binding Total, StringFormat='Total: {0:C}'}" FontSize="16" TextColor="Black" HorizontalOptions="End" IsVisible="{Binding ShowTotal}"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+        <Frame x:Name="UserModal" IsVisible="False" BackgroundColor="#80000000" BorderColor="#8286a2"  Padding="0" HeightRequest="300" WidthRequest="500">
+            <StackLayout BackgroundColor="White" Padding="20" Spacing="10">
+                <Label Text="Detalles del Usuario" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                <Label x:Name="UserNameLabel" FontSize="16" TextColor="Black"/>
+                <Label x:Name="UserEmailLabel" FontSize="16" TextColor="Black"/>
+                <Label x:Name="UserCountryLabel" FontSize="16" TextColor="Black"/>
+                <Label x:Name="UserAddressLabel" FontSize="16" TextColor="Black"/>
+                <Label x:Name="UserPhoneLabel" FontSize="16" TextColor="Black"/>
+                <Button Text="Cerrar" Clicked="OnCloseModalClicked" BackgroundColor="#007BFF" TextColor="White"/>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentView>
