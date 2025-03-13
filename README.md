@@ -1,13 +1,31 @@
-# Tukitukichic Admin
+# 🖥️ TukitukiChic Admin - Management Platform  
 
-**Tukitukichic Admin** es una aplicación de escritorio desarrollada en .NET MAUI para la administración y gestión eficiente de la plataforma Tukitukichic. Esta herramienta permite a los administradores gestionar productos, cursos, usuarios, y ver estadísticas de la plataforma de forma intuitiva, todo en una interfaz de usuario responsiva y segura.
+TukitukiChic Admin is a desktop application developed with .NET MAUI for the efficient management of the TukitukiChic platform. This tool allows administrators to manage products, courses, users, and view statistics through an intuitive, responsive, and secure interface.  
 
-## Funcionalidades
-- Gestión de productos y usuarios.
-- Interfaz intuitiva adaptada para escritorio.
-- Acceso seguro y control de permisos para usuarios administradores.
+---  
 
-## Tecnologías utilizadas
-- .NET MAUI
-- C#
-- SQLite (o base de datos relacionada, si aplica)
+## 🚀 Features  
+
+### 🛍️ Product Management  
+- Create, edit, and delete store products.  
+- Edit product categories.  
+
+### 👤 User Management  
+- Role and permission control for administrators, editors, and delivery personnel.  
+
+### 📊 Statistics  
+- View sales information.  
+
+### 🖥️ Desktop-Optimized Interface  
+- Intuitive and adaptable design for an efficient desktop experience.  
+- Optimized workflow for daily administration.  
+
+---  
+
+## 🛠️ Technologies Used  
+
+| Technology  | Purpose  |
+|------------|---------|
+| .NET MAUI  | Desktop application development  |
+| C#  | Business logic and backend  |
+| SQLite  | Local database for data storage  |
